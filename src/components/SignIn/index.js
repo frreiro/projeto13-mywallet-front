@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import "../../css/styled.css"
+import '../../css/reset.css'
+
 
 export default function SignIn() {
     return (
@@ -30,6 +32,9 @@ const Login = styled.div`
         font-family: 'Saira Stencil One';
         font-weight: 400;
         color: white;
+        font-size: 32px;
+
+        margin-bottom: 24px;
     }
     
     p{

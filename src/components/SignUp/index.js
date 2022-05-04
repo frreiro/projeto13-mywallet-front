@@ -32,6 +32,9 @@ const Register = styled.div`
         font-family: 'Saira Stencil One';
         font-weight: 400;
         color: white;
+        font-size: 32px;
+
+        margin-bottom: 28px;
     }
     
     p{
