@@ -5,6 +5,9 @@ import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import Wallet from "../Wallet";
 
+import "../../css/styled.css"
+import '../../css/reset.css'
+
 export default function App() {
     return (
         <BrowserRouter>

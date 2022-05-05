@@ -1,6 +1,5 @@
 import styled from "styled-components"
 
-const nums = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
 
 export default function Wallet() {
     return (

@@ -1,16 +1,45 @@
 import styled from "styled-components"
-import "../../css/styled.css"
-import '../../css/reset.css'
+import axios from "axios"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from 'react'
 
 
 export default function SignIn() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
+
+    async function sendLogin(e) {
+        e.preventDefault();
+
+        const data = {
+            email,
+            password
+        }
+
+        try {
+            const response = await axios.post("http://localhost:5000/signIn", data)
+            console.log(response);
+            navigate('/Wallet')
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
     return (
         <Login>
             <h1>MyWallet</h1>
-            <Input placeholder="E-mail" />
-            <Input placeholder="Senha" />
-            <EnterButton>Entrar</EnterButton>
-            <p>Ja tem consta? Entre agora!</p>
+            <form onSubmit={sendLogin}>
+                <Input type="email" required placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} />
+                <Input type="password" min={4} required placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
+                <EnterButton>Entrar</EnterButton>
+            </form>
+            <Link to="/SignUp" >
+                <p>Primeira vez? Cadastre-se!</p>
+            </Link>
         </Login>
     )
 }
@@ -35,6 +64,10 @@ const Login = styled.div`
 
         margin-bottom: 24px;
     }
+
+    a{
+        text-decoration: none;
+    }
     
     p{
         font-family: var(--main-font);
@@ -42,7 +75,11 @@ const Login = styled.div`
         color: white;
         font-size: 15px;
     }
-
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 `
 
 const Input = styled.input`
