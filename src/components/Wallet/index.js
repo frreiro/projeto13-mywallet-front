@@ -10,18 +10,12 @@ export default function Wallet() {
                 <ion-icon name="exit-outline"></ion-icon>
             </DivUser>
             <DivStatement>
-                {nums.map((num) => {
-                    return (
-                        <Transaction>
-                            <p className="date">30/11
-                                <span className="description">Almoço mãe</span>
-                            </p>
-                            <p className="out">60,30</p>
-                        </Transaction>
-                    )
-                })
-                }
-
+                <Transaction>
+                    <p className="date">30/11
+                        <span className="description">Almoço mãe</span>
+                    </p>
+                    <p className="out">60,30</p>
+                </Transaction>
             </DivStatement>
             <DivTotal>
                 <p className="total">SALDO</p>

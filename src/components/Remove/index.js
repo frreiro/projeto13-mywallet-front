@@ -1,37 +1,33 @@
 import styled from "styled-components"
-import "../../css/styled.css"
-import '../../css/reset.css'
 
-
-export default function SignIn() {
+export default function Remove() {
     return (
-        <Login>
-            <h1>MyWallet</h1>
-            <Input placeholder="E-mail" />
-            <Input placeholder="Senha" />
-            <EnterButton>Entrar</EnterButton>
-            <p>Ja tem consta? Entre agora!</p>
-        </Login>
+        <NewRemove>
+            <h1>Nova saída</h1>
+            <Input placeholder="Valor" />
+            <Input placeholder="Descrição" />
+            <SaveButton>Salvar saída</SaveButton>
+        </NewRemove>
     )
 }
 
-const Login = styled.div`
+
+const NewRemove = styled.div`
 
     width: 100vw;
     height: 100vh;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
     background-color: var(--main-color);
 
+    padding: 25px 25px 0 25px;
+
     h1{
-        font-family: var(--secondary-font);
-        font-weight: 400;
+        font-family: var(--main-font);
+        font-weight: 700;
         color: white;
-        font-size: 32px;
+        font-size: 26px;
 
         margin-bottom: 24px;
     }
@@ -65,7 +61,7 @@ const Input = styled.input`
     }
 `
 
-const EnterButton = styled.button`
+const SaveButton = styled.button`
     width: 326px;
     height: 46px;
 
@@ -80,4 +76,3 @@ const EnterButton = styled.button`
     background-color: var(--secondary-color);
     margin-bottom: 32px;
 `
-
