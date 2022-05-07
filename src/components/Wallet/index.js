@@ -37,7 +37,6 @@ export default function Wallet() {
         promise.then((response) => {
             const { data } = response
             setTransactions(data);
-            console.log(response)
         });
         promise.catch(() => {
             console.log("houve um problema");
@@ -46,7 +45,7 @@ export default function Wallet() {
 
 
 
-    const newTotal = formatCash(userTotal?.toFixed(2));
+    const newTotal = formatCash(userTotal);
     const isProperties = Object.keys(transactions).length > 0 ? true : false;
 
     //FIXME: CSS/HTML do saldo ta estranho
@@ -66,7 +65,7 @@ export default function Wallet() {
                                 <p className="date">{formatDate(date)}
                                     <span className="description">{description}</span>
                                 </p>
-                                <p className={type}>{formatCash(value.toFixed(2))}</p>
+                                <p className={type}>{formatCash(value)}</p>
                             </Transaction>
                         )
                     })

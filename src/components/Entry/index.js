@@ -1,12 +1,59 @@
+import axios from "axios";
+import { useState, useContext } from "react"
+import { useNavigate } from "react-router";
 import styled from "styled-components"
+import CurrencyInput from "react-currency-input-field";
+
+import UserContext from "../../context/userContext";
 
 export default function Entry() {
+
+    const { userInfo } = useContext(UserContext);
+    const { token } = userInfo;
+    const navigate = useNavigate();
+
+    const [value, setValue] = useState("")
+    const [description, setDescription] = useState("")
+
+    function formatCash(cash) {
+        const newCash = `${cash}`.replace(",", ".");
+        return newCash;
+    }
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    }
+
+    function sendEntry(e) {
+        e.preventDefault();
+
+        console.log(value);
+
+        const data = {
+            value: formatCash(value),
+            description,
+        }
+
+        axios.post("http://localhost:5000/walletIn", data, config)
+            .then((response) => {
+                console.log(response.data);
+                navigate("/Wallet");
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     return (
         <NewEntry>
             <h1>Nova entrada</h1>
-            <Input placeholder="Valor" />
-            <Input placeholder="Descrição" />
-            <SaveButton>Salvar entrada</SaveButton>
+            <form onSubmit={sendEntry}>
+                <CurrencyInput decimalSeparator="," min={1} value={value} decimalsLimit="2" placeholder="Valor" required onValueChange={(value) => setValue(value)} />
+                <input type="text" required value={description} placeholder="Descrição" onChange={(e) => setDescription(e.target.value)} />
+                <SaveButton type="submit">Salvar entrada</SaveButton>
+            </form>
         </NewEntry>
     )
 }
@@ -39,26 +86,26 @@ const NewEntry = styled.div`
         font-size: 15px;
     }
 
-`
+    input{
+        width: 326px;
+        height: 58px;
 
-const Input = styled.input`
-    width: 326px;
-    height: 58px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        background-color: white;
 
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    background-color: white;
+        font-family: var(--main-font);
+        font-size: 20px;
 
-    font-family: var(--main-font);
-    font-size: 20px;
+        padding-left: 15px;
+        margin-bottom: 13px;
 
-    padding-left: 15px;
-    margin-bottom: 13px;
-
-    ::placeholder{
-        color: #000000;
+        ::placeholder{
+            color: #000000;
+        }
     }
+
 `
 
 const SaveButton = styled.button`
