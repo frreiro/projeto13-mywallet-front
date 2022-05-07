@@ -1,13 +1,16 @@
 import styled from "styled-components"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import UserContext from "./../../context/userContext.js"
 
 
 export default function SignIn() {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const { setUserInfo } = useContext(UserContext)
+
+    const [email, setEmail] = useState("lucas@uol.com");
+    const [password, setPassword] = useState("123456");
 
     const navigate = useNavigate();
 
@@ -21,7 +24,12 @@ export default function SignIn() {
 
         try {
             const response = await axios.post("http://localhost:5000/signIn", data)
+
+            setUserInfo(response.data); // use context
+
+            //FIXME: Tirar o console
             console.log(response);
+
             navigate('/Wallet')
         } catch (e) {
             console.log(e)
@@ -33,8 +41,8 @@ export default function SignIn() {
         <Login>
             <h1>MyWallet</h1>
             <form onSubmit={sendLogin}>
-                <Input type="email" required placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} />
-                <Input type="password" min={4} required placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
+                <Input type="email" required value={email} placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} />
+                <Input type="password" min={4} required value={password} placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
                 <EnterButton>Entrar</EnterButton>
             </form>
             <Link to="/SignUp" >
