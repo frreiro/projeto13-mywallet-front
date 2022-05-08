@@ -26,16 +26,16 @@ export default function SignUp() {
 
     }
 
-    async function sendRegister(data) {
-        try {
-            const response = await axios.post("http://localhost:5000/signUp", data);
-            console.log(response);
-            navigate('/');
-
-        } catch (e) {
-            alert("Erro de validação")
-            console.log(e)
-        }
+    function sendRegister(data) {
+        axios.post("http://localhost:5000/signUp", data)
+            .then((response) => {
+                console.log(response);
+                navigate("/");
+            })
+            .catch((e) => {
+                alert("Erro de validação")
+                console.log(e);
+            })
     }
 
 

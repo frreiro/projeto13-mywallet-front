@@ -14,6 +14,11 @@ export default function SignIn() {
 
     const navigate = useNavigate();
 
+    function saveLocalStorage(data) {
+        const stringifiedData = JSON.stringify(data);
+        localStorage.setItem("userData", stringifiedData);
+    }
+
     async function sendLogin(e) {
         e.preventDefault();
 
@@ -24,12 +29,8 @@ export default function SignIn() {
 
         try {
             const response = await axios.post("http://localhost:5000/signIn", data)
-
             setUserInfo(response.data); // use context
-
-            //FIXME: Tirar o console
-            console.log(response);
-
+            saveLocalStorage(response.data);
             navigate('/Wallet')
         } catch (e) {
             console.log(e)

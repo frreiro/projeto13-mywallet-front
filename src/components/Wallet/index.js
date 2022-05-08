@@ -9,11 +9,29 @@ import UserContext from "../../context/userContext"
 export default function Wallet() {
 
     const { userInfo } = useContext(UserContext);
-    const { token, name: username } = userInfo;
+    const { token, name: username } = getUserData();
+
+
+    function getUserData() {
+        if (Object.keys(userInfo).length > 0) return userInfo;
+        else return callLocalStorage();
+    }
+
+    function callLocalStorage() {
+        const dataString = localStorage.getItem("userData");
+        return JSON.parse(dataString);
+    }
+
     const navigate = useNavigate();
+
+    function logOut() {
+        if (callLocalStorage()) localStorage.removeItem("userData");
+        navigate("/");
+    }
 
     const [transactions, setTransactions] = useState({});
     const { userTotal, userTransactions } = transactions;
+
 
 
     function formatCash(cash) {
@@ -53,7 +71,7 @@ export default function Wallet() {
         <DivWallet>
             <DivUser>
                 <h1>Olá, {username}</h1>
-                <ion-icon name="exit-outline"></ion-icon>
+                <ion-icon name="exit-outline" onClick={logOut}></ion-icon>
             </DivUser>
             <DivStatement>
                 {isProperties

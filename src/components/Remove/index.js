@@ -9,7 +9,21 @@ import UserContext from "../../context/userContext";
 export default function Remove() {
 
     const { userInfo } = useContext(UserContext);
-    const { token } = userInfo;
+    const { token } = getUserData()
+
+    function getUserData() {
+        if (Object.keys(userInfo).length > 0) return userInfo;
+        else return callLocalStorage();
+    }
+
+
+    function callLocalStorage() {
+        const dataString = localStorage.getItem("userData");
+        return JSON.parse(dataString);
+    }
+
+
+
     const navigate = useNavigate();
 
     const [value, setValue] = useState("")
@@ -28,8 +42,6 @@ export default function Remove() {
 
     function sendRemove(e) {
         e.preventDefault();
-
-        console.log(value);
 
         const data = {
             value: formatCash(value),
