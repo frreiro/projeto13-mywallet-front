@@ -68,6 +68,7 @@ export default function Transaction() {
             .catch((error) => {
                 console.log(error);
                 console.log(error.response.data);
+                setClick(false);
             })
     }
 
@@ -80,6 +81,7 @@ export default function Transaction() {
             .catch((error) => {
                 console.log(error);
                 console.log(error.response.data);
+                setClick(false);
             })
     }
 
