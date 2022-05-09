@@ -33,8 +33,10 @@ export default function Wallet() {
     const [transactions, setTransactions] = useState({});
     const { userTotal, userTransactions } = transactions;
 
-    function openTransactionPage(method, text) {
-        navigate(`/transaction?method=${method}&text=${text}`);
+    function openTransactionPage(method, text, update, id) {
+        if (id) navigate(`/transaction?method=${method}&text=${text}&update=${update}&id=${id}`);
+        else navigate(`/transaction?method=${method}&text=${text}&update=${update}`);
+
     }
 
     function formatCash(cash) {
@@ -84,7 +86,7 @@ export default function Wallet() {
                         const { date, description, type, value, _id } = transaction;
 
                         return (
-                            <Transaction key={_id} >
+                            <Transaction key={_id} onClick={() => openTransactionPage("update", "entrada", true, _id)}>
                                 <p className="date">{formatDate(date)}
                                     <span className="description">{description}</span>
                                 </p>
@@ -100,11 +102,11 @@ export default function Wallet() {
                 <p className={userTotal < 0 ? "out" : "in"}>{newTotal}</p>
             </DivTotal>
             <DivPayment>
-                <div onClick={() => openTransactionPage("In", "entrada")}>
+                <div onClick={() => openTransactionPage("in", "entrada", false)}>
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <p>Nova <br /> entrada</p>
                 </div>
-                <div onClick={() => openTransactionPage("Out", "saída")}>
+                <div onClick={() => openTransactionPage("out", "saída", false)}>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <p>Nova <br /> saída</p>
                 </div>

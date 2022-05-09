@@ -12,7 +12,7 @@ import UserContext from "../../context/userContext";
 export default function Transaction() {
 
     const { search } = useLocation();
-    const { method, text } = queryString.parse(search);
+    const { method, text, update, id } = queryString.parse(search);
 
     const { userInfo } = useContext(UserContext);
     const { token } = getUserData()
@@ -48,12 +48,20 @@ export default function Transaction() {
     function sendEntry(e) {
         e.preventDefault();
         setClick(true);
+
         const data = {
             value: formatCash(value),
             description,
         }
 
-        axios.post(`http://localhost:5000/wallet${method}`, data, config)
+        if (JSON.parse(update)) updateWallet(data)
+        else postWallet(data);
+
+    }
+
+    function postWallet(data) {
+        console.log("entrei post")
+        axios.post(`http://localhost:5000/wallet/${method}`, data, config)
             .then((response) => {
                 console.log(response.data);
                 navigate("/wallet");
@@ -63,11 +71,25 @@ export default function Transaction() {
             })
     }
 
-    const loader = click ? <ThreeDots width="50" height="50" color="white" /> : `Salvar ${text}`
+    function updateWallet(data) {
+        axios.put(`http://localhost:5000/wallet/update/${id}`, data, config)
+            .then((response) => {
+                console.log(response.data);
+                navigate("/wallet");
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+
+    const operation = JSON.parse(update) ? "Editar" : "Nova"
+    const buttonOperation = JSON.parse(update) ? "Editar" : "Salvar"
+    const loader = click ? <ThreeDots width="50" height="50" color="white" /> : `${buttonOperation} ${text}`
 
     return (
         <NewEntry>
-            <h1>Nova {text}</h1>
+            <h1>{operation} {text}</h1>
             <form onSubmit={sendEntry}>
                 <CurrencyInput decimalSeparator="," min={1} value={value} decimalsLimit="2" placeholder="Valor" required onValueChange={(value) => setValue(value)} />
                 <input type="text" required value={description} placeholder="Descrição" onChange={(e) => setDescription(e.target.value)} />
