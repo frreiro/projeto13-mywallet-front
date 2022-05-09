@@ -67,6 +67,7 @@ export default function Transaction() {
             })
             .catch((error) => {
                 console.log(error);
+                console.log(error.response.data);
             })
     }
 
@@ -78,6 +79,7 @@ export default function Transaction() {
             })
             .catch((error) => {
                 console.log(error);
+                console.log(error.response.data);
             })
     }
 

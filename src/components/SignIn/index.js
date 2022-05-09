@@ -36,7 +36,7 @@ export default function SignIn() {
             saveLocalStorage(response.data);
             navigate('/wallet')
         } catch (e) {
-            console.log(e)
+            console.log(e.response.data);
         }
     }
 

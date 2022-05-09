@@ -29,12 +29,12 @@ export default function SignUp() {
     function sendRegister(data) {
         axios.post(`https://projeto13-my-wallet-back.herokuapp.com/signUp`, data)
             .then((response) => {
-                console.log(response);
+                console.log(response.data);
                 navigate("/");
             })
             .catch((e) => {
                 alert("Erro de validação")
-                console.log(e);
+                console.log(e.response.data);
             })
     }
 

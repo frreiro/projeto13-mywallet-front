@@ -75,8 +75,8 @@ export default function Wallet() {
                 console.log(response.data);
                 setRefresh(!refresh);
             });
-            promise.catch(() => {
-                console.log("houve um problema");
+            promise.catch((e) => {
+                console.log(e.response.data);
                 setRefresh(!refresh);
 
             })
