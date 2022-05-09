@@ -11,6 +11,8 @@ export default function Wallet() {
 
     const { userInfo } = useContext(UserContext);
     const { token, name: username } = getUserData();
+    const navigate = useNavigate();
+
 
 
     function getUserData() {
@@ -23,19 +25,19 @@ export default function Wallet() {
         return JSON.parse(dataString);
     }
 
-    const navigate = useNavigate();
 
     function logOut() {
         if (callLocalStorage()) localStorage.removeItem("userData");
         navigate("/");
     }
-
+    const [refresh, setRefresh] = useState(false)
     const [transactions, setTransactions] = useState({});
     const { userTotal, userTransactions } = transactions;
 
-    function openTransactionPage(method, text, update, id) {
-        if (id) navigate(`/transaction?method=${method}&text=${text}&update=${update}&id=${id}`);
-        else navigate(`/transaction?method=${method}&text=${text}&update=${update}`);
+    function openTransactionPage(method, text, id) {
+        if (method === "update") navigate(`/transaction?method=${method}&text=${text}&id=${id}`);
+        if (method === "delete") navigate(`/transaction?method=${method}&id=${id}`);
+        else navigate(`/transaction?method=${method}&text=${text}`);
 
     }
 
@@ -64,9 +66,20 @@ export default function Wallet() {
         promise.catch(() => {
             console.log("houve um problema");
         })
-    }, []);
+    }, [refresh]);
 
-
+    function deleteWallet(id) {
+        if (window.confirm("Vocễ deseja excluir esta transação da sua carteira?")) {
+            const promise = axios.delete(`http://localhost:5000/wallet/${id}`, config);
+            promise.then((response) => {
+                console.log(response.data);
+            });
+            promise.catch(() => {
+                console.log("houve um problema");
+            })
+            setRefresh(!refresh);
+        }
+    }
 
 
 
@@ -86,11 +99,13 @@ export default function Wallet() {
                         const { date, description, type, value, _id } = transaction;
 
                         return (
-                            <Transaction key={_id} onClick={() => openTransactionPage("update", "entrada", true, _id)}>
+                            <Transaction key={_id} >
                                 <p className="date">{formatDate(date)}
-                                    <span className="description">{description}</span>
+                                    <span className="description" onClick={() => openTransactionPage("update", "entrada", _id)}>{description}</span>
                                 </p>
-                                <p className={type}>{formatCash(value)}</p>
+                                <p className={type}>{formatCash(value)}
+                                    <span><ion-icon name="close-outline" onClick={() => deleteWallet(_id)}></ion-icon></span>
+                                </p>
                             </Transaction>
                         )
                     })
@@ -203,6 +218,7 @@ const DivTotal = styled.div`
 const Transaction = styled.div`
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     margin-bottom: 18px;
@@ -215,6 +231,19 @@ const Transaction = styled.div`
         margin-left: 10px;
         color: #000;
     }
+
+    p{
+        display: flex;
+        justify-content: center;
+        align-items:center;
+    }
+
+    ion-icon{
+        margin-left: 10px;
+        color: #C6C6C6;
+    }
+
+    
 `
 
 const DivPayment = styled.div`
