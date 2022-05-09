@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import styled from "styled-components"
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { TailSpin } from "react-loader-spinner";
 
 import UserContext from "../../context/userContext"
 
@@ -32,7 +33,9 @@ export default function Wallet() {
     const [transactions, setTransactions] = useState({});
     const { userTotal, userTransactions } = transactions;
 
-
+    function openTransactionPage(method, text) {
+        navigate(`/transaction?method=${method}&text=${text}`);
+    }
 
     function formatCash(cash) {
         const newFormat = `${cash}`.replace(".", ",");
@@ -60,6 +63,8 @@ export default function Wallet() {
             console.log("houve um problema");
         })
     }, []);
+
+
 
 
 
@@ -95,24 +100,25 @@ export default function Wallet() {
                 <p className={userTotal < 0 ? "out" : "in"}>{newTotal}</p>
             </DivTotal>
             <DivPayment>
-                <div onClick={() => navigate("/Entry")}>
+                <div onClick={() => openTransactionPage("In", "entrada")}>
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <p>Nova <br /> entrada</p>
                 </div>
-                <div onClick={() => navigate("/Remove")}>
+                <div onClick={() => openTransactionPage("Out", "saída")}>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <p>Nova <br /> saída</p>
                 </div>
             </DivPayment>
         </DivWallet >
 
-    const loading = <></>
+    const loading = <Loading><TailSpin width="100" height="100" color="#8C11BE" /></Loading>
     return isProperties ? wallet : loading
 }
 
 const DivWallet = styled.div`
     width: 100vw;
     height: 100vh;
+    
     
     font-family: var(--main-font);
     font-style: normal;
@@ -242,4 +248,12 @@ const DivPayment = styled.div`
         margin-top: 13px;
         padding: 10px 0 10px 10px;
     }
+`
+const Loading = styled.div`
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

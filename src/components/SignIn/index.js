@@ -2,6 +2,8 @@ import styled from "styled-components"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useContext } from 'react'
+import { ThreeDots } from "react-loader-spinner";
+
 import UserContext from "./../../context/userContext.js"
 
 
@@ -9,8 +11,9 @@ export default function SignIn() {
 
     const { setUserInfo } = useContext(UserContext)
 
-    const [email, setEmail] = useState("lucas@uol.com");
-    const [password, setPassword] = useState("123456");
+    const [click, setClick] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
@@ -21,7 +24,7 @@ export default function SignIn() {
 
     async function sendLogin(e) {
         e.preventDefault();
-
+        setClick(true);
         const data = {
             email,
             password
@@ -31,12 +34,13 @@ export default function SignIn() {
             const response = await axios.post("http://localhost:5000/signIn", data)
             setUserInfo(response.data); // use context
             saveLocalStorage(response.data);
-            navigate('/Wallet')
+            navigate('/wallet')
         } catch (e) {
             console.log(e)
         }
     }
 
+    const loader = click ? <ThreeDots width="50" height="50" color="white" /> : "Entrar"
 
     return (
         <Login>
@@ -44,7 +48,7 @@ export default function SignIn() {
             <form onSubmit={sendLogin}>
                 <Input type="email" required value={email} placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} />
                 <Input type="password" min={4} required value={password} placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
-                <EnterButton>Entrar</EnterButton>
+                <EnterButton>{loader}</EnterButton>
             </form>
             <Link to="/SignUp" >
                 <p>Primeira vez? Cadastre-se!</p>
@@ -114,6 +118,10 @@ const Input = styled.input`
 const EnterButton = styled.button`
     width: 326px;
     height: 46px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     outline: none;
     border: none;

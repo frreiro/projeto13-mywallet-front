@@ -3,10 +3,16 @@ import { useState, useContext } from "react"
 import { useNavigate } from "react-router";
 import styled from "styled-components"
 import CurrencyInput from "react-currency-input-field";
+import { ThreeDots } from "react-loader-spinner";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
 
 import UserContext from "../../context/userContext";
 
-export default function Entry() {
+export default function Transaction() {
+
+    const { search } = useLocation();
+    const { method, text } = queryString.parse(search);
 
     const { userInfo } = useContext(UserContext);
     const { token } = getUserData()
@@ -24,6 +30,7 @@ export default function Entry() {
 
     const navigate = useNavigate();
 
+    const [click, setClick] = useState(false);
     const [value, setValue] = useState("")
     const [description, setDescription] = useState("")
 
@@ -40,29 +47,31 @@ export default function Entry() {
 
     function sendEntry(e) {
         e.preventDefault();
-
+        setClick(true);
         const data = {
             value: formatCash(value),
             description,
         }
 
-        axios.post("http://localhost:5000/walletIn", data, config)
+        axios.post(`http://localhost:5000/wallet${method}`, data, config)
             .then((response) => {
                 console.log(response.data);
-                navigate("/Wallet");
+                navigate("/wallet");
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
+    const loader = click ? <ThreeDots width="50" height="50" color="white" /> : `Salvar ${text}`
+
     return (
         <NewEntry>
-            <h1>Nova entrada</h1>
+            <h1>Nova {text}</h1>
             <form onSubmit={sendEntry}>
                 <CurrencyInput decimalSeparator="," min={1} value={value} decimalsLimit="2" placeholder="Valor" required onValueChange={(value) => setValue(value)} />
                 <input type="text" required value={description} placeholder="Descrição" onChange={(e) => setDescription(e.target.value)} />
-                <SaveButton type="submit">Salvar entrada</SaveButton>
+                <SaveButton type="submit">{loader}</SaveButton>
             </form>
         </NewEntry>
     )
@@ -125,6 +134,10 @@ const SaveButton = styled.button`
     outline: none;
     border: none;
     border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     color: white;
     font-size: 20px;
