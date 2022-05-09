@@ -37,6 +37,7 @@ export default function SignIn() {
             navigate('/wallet')
         } catch (e) {
             console.log(e.response.data);
+            setClick(false);
         }
     }
 
