@@ -13,6 +13,7 @@ export default function Transaction() {
 
     const { search } = useLocation();
     const { method, text, id } = queryString.parse(search);
+    console.log(id);
 
     const { userInfo } = useContext(UserContext);
     const { token } = getUserData()
@@ -70,7 +71,7 @@ export default function Transaction() {
             })
     }
 
-    function updateWallet(data) {
+    function updateWallet(data,) {
         axios.put(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${id}`, data, config)
             .then((response) => {
                 console.log(response.data);

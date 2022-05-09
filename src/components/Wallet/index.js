@@ -37,7 +37,7 @@ export default function Wallet() {
     function openTransactionPage(method, text, id) {
         if (method === "update") navigate(`/transaction?method=${method}&text=${text}&id=${id}`);
         if (method === "delete") navigate(`/transaction?method=${method}&id=${id}`);
-        else navigate(`/transaction?method=${method}&text=${text}`);
+        if (method === "in" || method === "out") navigate(`/transaction?method=${method}&text=${text}`);
 
     }
 
@@ -73,11 +73,13 @@ export default function Wallet() {
             const promise = axios.delete(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${id}`, config);
             promise.then((response) => {
                 console.log(response.data);
+                setRefresh(!refresh);
             });
             promise.catch(() => {
                 console.log("houve um problema");
+                setRefresh(!refresh);
+
             })
-            setRefresh(!refresh);
         }
     }
 
@@ -86,7 +88,6 @@ export default function Wallet() {
     const newTotal = formatCash(userTotal);
     const isProperties = Object.keys(transactions).length > 0 ? true : false;
 
-    //FIXME: CSS/HTML do saldo ta estranho
     const wallet =
         <DivWallet>
             <DivUser>
