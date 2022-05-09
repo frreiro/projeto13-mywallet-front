@@ -58,7 +58,7 @@ export default function Wallet() {
     }
 
     useEffect(() => {
-        const promise = axios.get("http://localhost:5000/wallet", config);
+        const promise = axios.get(`https://projeto13-my-wallet-back.herokuapp.com/wallet`, config);
         promise.then((response) => {
             const { data } = response
             setTransactions(data);
@@ -70,7 +70,7 @@ export default function Wallet() {
 
     function deleteWallet(id) {
         if (window.confirm("Vocễ deseja excluir esta transação da sua carteira?")) {
-            const promise = axios.delete(`http://localhost:5000/wallet/${id}`, config);
+            const promise = axios.delete(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${id}`, config);
             promise.then((response) => {
                 console.log(response.data);
             });

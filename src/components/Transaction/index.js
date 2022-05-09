@@ -60,7 +60,7 @@ export default function Transaction() {
     }
 
     function postWallet(data) {
-        axios.post(`http://localhost:5000/wallet/${method}`, data, config)
+        axios.post(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${method}`, data, config)
             .then((response) => {
                 console.log(response.data);
                 navigate("/wallet");
@@ -71,7 +71,7 @@ export default function Transaction() {
     }
 
     function updateWallet(data) {
-        axios.put(`http://localhost:5000/wallet/${id}`, data, config)
+        axios.put(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${id}`, data, config)
             .then((response) => {
                 console.log(response.data);
                 navigate("/wallet");
@@ -82,8 +82,8 @@ export default function Transaction() {
     }
 
 
-    const operation = method === "upadate" ? "Editar" : "Nova"
-    const buttonOperation = method === "upadate" ? "Editar" : "Salvar"
+    const operation = method === "update" ? "Editar" : "Nova"
+    const buttonOperation = method === "update" ? "Editar" : "Salvar"
     const loader = click ? <ThreeDots width="50" height="50" color="white" /> : `${buttonOperation} ${text}`
 
     return (

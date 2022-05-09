@@ -27,7 +27,7 @@ export default function SignUp() {
     }
 
     function sendRegister(data) {
-        axios.post("http://localhost:5000/signUp", data)
+        axios.post(`https://projeto13-my-wallet-back.herokuapp.com/signUp`, data)
             .then((response) => {
                 console.log(response);
                 navigate("/");
@@ -41,6 +41,7 @@ export default function SignUp() {
 
     return (
         <Register>
+            <p>OPA</p>
             <h1>MyWallet</h1>
             <form onSubmit={formatData}>
                 <Input type="text" required placeholder="Nome" onChange={(e) => setName(e.target.value)} />
@@ -69,10 +70,11 @@ const Register = styled.div`
     justify-content: center;
     align-items: center;
 
+    
     background-color: var(--main-color);
 
     h1{
-        font-family: 'Saira Stencil One';
+        font-family: var(--secondary-font);
         font-weight: 400;
         color: white;
         font-size: 32px;
