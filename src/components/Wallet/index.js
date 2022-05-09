@@ -97,11 +97,11 @@ export default function Wallet() {
                 {isProperties
                     ? userTransactions.map((transaction) => {
                         const { date, description, type, value, _id } = transaction;
-
+                        const state = type === "in" ? "entrada" : "saída"
                         return (
                             <Transaction key={_id} >
                                 <p className="date">{formatDate(date)}
-                                    <span className="description" onClick={() => openTransactionPage("update", "entrada", _id)}>{description}</span>
+                                    <span className="description" onClick={() => openTransactionPage("update", state, _id)}>{description}</span>
                                 </p>
                                 <p className={type}>{formatCash(value)}
                                     <span><ion-icon name="close-outline" onClick={() => deleteWallet(_id)}></ion-icon></span>

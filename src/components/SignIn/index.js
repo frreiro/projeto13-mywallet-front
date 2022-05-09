@@ -50,7 +50,7 @@ export default function SignIn() {
                 <Input type="password" min={4} required value={password} placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
                 <EnterButton>{loader}</EnterButton>
             </form>
-            <Link to="/SignUp" >
+            <Link to="/signUp" >
                 <p>Primeira vez? Cadastre-se!</p>
             </Link>
         </Login>
