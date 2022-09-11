@@ -20,7 +20,6 @@ O projeto teve como requisito o uso de React e utilizou alguns conceitos como:
 
 E algumas bibliotecas: 
   - [React Loader Spinner](https://github.com/mhnpd/react-loader-spinner)
-  - [React Circular Progressbar](https://github.com/kevinsqi/react-circular-progressbar)
 
 ## 📱 Mobile
 
