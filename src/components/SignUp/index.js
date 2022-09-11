@@ -27,7 +27,7 @@ export default function SignUp() {
     }
 
     function sendRegister(data) {
-        axios.post(`https://projeto13-my-wallet-back.herokuapp.com/signUp`, data)
+        axios.post(`${process.env.REACT_APP_API_URI}/signup`, data)
             .then((response) => {
                 console.log(response.data);
                 navigate("/");

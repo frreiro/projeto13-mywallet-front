@@ -60,7 +60,7 @@ export default function Transaction() {
     }
 
     function postWallet(data) {
-        axios.post(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${method}`, data, config)
+        axios.post(`${process.env.REACT_APP_API_URI}/wallet/${method}`, data, config)
             .then((response) => {
                 console.log(response.data);
                 navigate("/wallet");
@@ -73,7 +73,7 @@ export default function Transaction() {
     }
 
     function updateWallet(data) {
-        axios.put(`https://projeto13-my-wallet-back.herokuapp.com/wallet/${id}`, data, config)
+        axios.put(`${process.env.REACT_APP_API_URI}/wallet/${id}`, data, config)
             .then((response) => {
                 console.log(response.data);
                 navigate("/wallet");
