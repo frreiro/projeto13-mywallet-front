@@ -1,7 +1,7 @@
 <div align="center">
   <img width="200" height="200" src="https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f4b0.svg" />
 </div>
-<h1 align="center">TrackIt</h1>
+<h1 align="center">MyWallet</h1>
 
 ## 💻 Sobre o projeto
 
@@ -44,4 +44,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
   
   <a target="_blank" href="https://projeto13-mywallet-front-lac.vercel.app/">
   <img alt="deploy-site" src="https://img.shields.io/badge/Link%20Deploy%20-Site-%2304D361">
+</a>
+ <a target="_blank" href="https://github.com/frreiro/projeto13-mywallet-back">
+  <img alt="deploy-site" src="https://img.shields.io/badge/Back%20end%20-Repositorio-%2304D361">
 </a>
