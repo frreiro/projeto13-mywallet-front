@@ -41,7 +41,6 @@ export default function SignUp() {
 
     return (
         <Register>
-            <p>OPA</p>
             <h1>MyWallet</h1>
             <form onSubmit={formatData}>
                 <Input type="text" required placeholder="Nome" onChange={(e) => setName(e.target.value)} />
